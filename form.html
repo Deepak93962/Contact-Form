@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+
+    <form class="container" name="google-sheet">
+        <h2>Connect With Us</h2>
+    
+        <!-- 1. Full Name -->
+        <div class="field">
+            <label for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+        </div>
+    
+        <!-- 2. Email -->
+        <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+        </div>
+    
+        <!-- 3. Phone -->
+        <div class="field">
+            <label for="phone">Contact Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 9XXXXXXXXX" required>
+        </div>
+    
+        <!-- 4. Service Type -->
+        <div class="field">
+            <label for="service">Service Required</label>
+            <select id="service" name="service" required>
+                <option value="">-- Select Service --</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Web Application">Web Application</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="Backend API">Backend API</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    
+        <!-- 5. Message -->
+        <div class="field">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" rows="4" placeholder="Briefly describe your requirement"
+                required></textarea>
+        </div>
+    
+        <button type="submit">Send Request</button>
+    </form>
+
+
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxUqZg7ozm6AZzKB17KyOU0UzXmedhWFVTlEbmlmcxDdVL52Ec9Pl2N1Zmuv_OLtbfp9w/exec";
+
+        const form = document.forms["google-sheet"];
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            fetch(scriptURL, {
+                method: "POST",
+                body: new FormData(form)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert(" Thank you! Your request has been submitted.");
+                        form.reset();
+                    } else {
+                        alert(" Submission failed. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error!", error.message);
+                    alert(" Something went wrong. Try later.");
+                });
+        });
+    </script>
+
+</body>
+
+</html>
